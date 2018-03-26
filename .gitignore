@@ -1,3 +1,4 @@
 .idea/
 jwildcard/.gradle/
+jwildcard/gradle.properties
 jwildcard/out/

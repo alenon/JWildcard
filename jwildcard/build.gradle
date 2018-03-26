@@ -1,15 +1,65 @@
-repositories {
-    jcenter()
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+
+plugins {
+    id "com.jfrog.bintray" version "1.7"
 }
 
 apply plugin: 'java'
 sourceCompatibility = 1.8
 
 group 'com.yevdo'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 dependencies {
     testCompile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.7'
     testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4'
     testCompile group: 'cglib', name: 'cglib-nodep', version: '3.2.4'
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
+    apply plugin: 'java'
+}
+
+publishing {
+    publications {
+        MyPublication(MavenPublication) {
+            from components.java
+            groupId 'com.yevdo'
+            artifactId 'jwildcard'
+            version '1.0'
+        }
+    }
+}
+
+bintray {
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+    publications = ['MyPublication']
+    pkg {
+        repo = 'jwildcard'
+        name = 'jwildcard'
+        userOrg = 'yevdo'
+        licenses = ['MIT']
+        vcsUrl = 'https://github.com/alenon/JWildcard.git'
+        labels = ['wildcard', 'java']
+        publicDownloadNumbers = true
+        version {
+            name = '1.0'
+            desc = 'JWildcard'
+            vcsTag = '1.0'
+        }
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.4'
 }
