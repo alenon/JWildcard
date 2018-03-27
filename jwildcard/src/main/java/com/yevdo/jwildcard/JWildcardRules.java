@@ -14,11 +14,19 @@ public class JWildcardRules {
     /**
      * JWildcardRules represents a set of rules to use while converting
      * wildcard to regex string
+     */
+    public JWildcardRules() {
+        rules = new HashSet<>();
+    }
+
+    /**
+     * JWildcardRules represents a set of rules to use while converting
+     * wildcard to regex string
      *
      * @param rules a collection of JWildcardRule
      */
-    public JWildcardRules(Set<JWildcardRule> rules) {
-        this.rules = rules != null ? rules : new HashSet<>();
+    public JWildcardRules(final Set<JWildcardRule> rules) {
+        this.rules = (rules != null) ? new HashSet<>(rules) : new HashSet<>();
     }
 
     /**

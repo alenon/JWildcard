@@ -45,6 +45,7 @@ public class JWildcard {
      * @param rules    a collection of desired wildcard rules to use in conversion process
      * @param strict   a flag which indicates whether to wrap the result regex with ^ and $
      * @return <tt>string</tt> representation of regex
+     * @throws IllegalArgumentException if one of the above is null (wildcard, rules)
      */
     public static String wildcardToRegex(final String wildcard, final JWildcardRules rules, boolean strict) {
         return JWildcardToRegex.wildcardToRegex(wildcard, rules, strict);
@@ -57,8 +58,13 @@ public class JWildcard {
      * @param wildcard the wildcard
      * @param text the string to be matched at provided wildcard
      * @return <tt>true</tt> if the text matches the wildcard
+     * @throws IllegalArgumentException if one of the above is null (wildcard, text)
      */
     public static boolean matches(String wildcard, String text) {
+        if(text == null) {
+            throw new IllegalArgumentException("Text must not be null");
+        }
+
         Pattern pattern = Pattern.compile(wildcardToRegex(wildcard));
         Matcher matcher = pattern.matcher(text);
         return matcher.matches();
@@ -70,6 +76,10 @@ class JWildcardToRegex {
     public static String wildcardToRegex(final String wildcard, final JWildcardRules rules, boolean strict) {
         if (wildcard == null) {
             throw new IllegalArgumentException("Wildcard must not be null");
+        }
+
+        if (rules == null) {
+            throw new IllegalArgumentException("Rules must not be null");
         }
 
         List<JWildcardPairWithIndex> listOfOccurrences = getContainedWildcardPairsOrdered(wildcard, rules);
