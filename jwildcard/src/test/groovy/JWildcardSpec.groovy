@@ -1,6 +1,7 @@
 import com.yevdo.jwildcard.JWildcard
+import com.yevdo.jwildcard.JWildcardRule
+import com.yevdo.jwildcard.JWildcardRules
 import spock.lang.Specification
-
 
 /**
  * @author Yevdo Abramov
@@ -34,7 +35,53 @@ class JWildcardSpec extends Specification {
         regex == ".\\Qcard\\E.*\\Qwild\\E"
     }
 
+    def "check wildcard to regex with rules"() {
+        given:
+        JWildcardRules rules = null
+
+        when: "rules is null"
+        JWildcard.wildcardToRegex("abc*efg", rules, false)
+
+        then:
+        thrown(IllegalArgumentException)
+
+        when: "rule * -> \\w*"
+        JWildcardRule starRule = new JWildcardRule("*", "\\w*")
+        rules = new JWildcardRules(Collections.singleton(starRule))
+        String regex = JWildcard.wildcardToRegex("abc*efg", rules, false)
+
+        then:
+        regex == "\\Qabc\\E\\w*\\Qefg\\E"
+
+        when: "add rule"
+        rules.addRule(new JWildcardRule("a", "a+"))
+        regex = JWildcard.wildcardToRegex("abc*efg", rules, false)
+
+        then:
+        regex == "a+\\Qbc\\E\\w*\\Qefg\\E"
+
+        when: "remove rule"
+        rules.removeRule(starRule)
+        regex = JWildcard.wildcardToRegex("abc*efg", rules, false)
+
+        then:
+        regex == "a+\\Qbc*efg\\E"
+    }
+
     def "check matcher"() {
+
+        when:  "wildcard is null"
+        JWildcard.matches(null, "mywildcard")
+
+        then:
+        thrown(IllegalArgumentException)
+
+        when:  "text is null"
+        JWildcard.matches("mywild*", null)
+
+        then:
+        thrown(IllegalArgumentException)
+
         when:
         boolean matches = JWildcard.matches("mywild*", "mywildcard")
 
@@ -52,5 +99,11 @@ class JWildcardSpec extends Specification {
 
         then:
         !matches
+
+        when:
+        matches = JWildcard.matches("mywildcard", "mywildcard")
+
+        then:
+        matches
     }
 }
