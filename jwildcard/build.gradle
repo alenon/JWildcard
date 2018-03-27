@@ -8,11 +8,17 @@ plugins {
     id "com.jfrog.bintray" version "1.7"
 }
 
-apply plugin: 'java'
-sourceCompatibility = 1.8
-
+version '1.1'
 group 'com.yevdo'
-version '1.0'
+
+repositories {
+    jcenter()
+}
+
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'java'
+apply plugin: 'idea'
 
 dependencies {
     testCompile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.7'
@@ -20,30 +26,11 @@ dependencies {
     testCompile group: 'cglib', name: 'cglib-nodep', version: '3.2.4'
 }
 
-allprojects {
-    repositories {
-        jcenter()
-    }
-    apply plugin: 'maven'
-    apply plugin: 'maven-publish'
-    apply plugin: 'java'
-}
-
-publishing {
-    publications {
-        MyPublication(MavenPublication) {
-            from components.java
-            groupId 'com.yevdo'
-            artifactId 'jwildcard'
-            version '1.0'
-        }
-    }
-}
 
 bintray {
     user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
     key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
-    publications = ['MyPublication']
+    publications = ['publisher']
     pkg {
         repo = 'jwildcard'
         name = 'jwildcard'
@@ -53,9 +40,9 @@ bintray {
         labels = ['wildcard', 'java']
         publicDownloadNumbers = true
         version {
-            name = '1.0'
+            name = project.version
             desc = 'JWildcard'
-            vcsTag = '1.0'
+            vcsTag = project.version
         }
     }
 }
@@ -77,4 +64,18 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 artifacts {
     archives sourcesJar
     archives javadocJar
+}
+
+publishing {
+    publications {
+        publisher(MavenPublication) {
+            from components.java
+            groupId project.group
+            artifactId 'jwildcard'
+            version project.version
+
+            artifact sourcesJar
+            artifact javadocJar
+        }
+    }
 }
