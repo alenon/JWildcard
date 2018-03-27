@@ -1,7 +1,6 @@
 import com.yevdo.jwildcard.JWildcard
 import spock.lang.Specification
 
-
 /**
  * @author Yevdo Abramov
  * Created on 26/03/2018
@@ -32,6 +31,9 @@ class JWildcardSpec extends Specification {
 
         then:
         regex == ".\\Qcard\\E.*\\Qwild\\E"
+    }
+
+    def "check wildcard to regex with rules"() {
     }
 
     def "check matcher"() {
