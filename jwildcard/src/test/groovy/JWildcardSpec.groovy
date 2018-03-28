@@ -11,7 +11,13 @@ class JWildcardSpec extends Specification {
 
     def "convert wildcard to regex"() {
         when:
-        String regex = JWildcard.wildcardToRegex("mywil?card*")
+        String regex = JWildcard.wildcardToRegex("mywil?c")
+
+        then:
+        regex == "^\\Qmywil\\E.\\Qc\\E\$"
+
+        when:
+        regex = JWildcard.wildcardToRegex("mywil?card*")
 
         then:
         regex == "^\\Qmywil\\E.\\Qcard\\E.*\$"
@@ -102,6 +108,12 @@ class JWildcardSpec extends Specification {
 
         when:
         matches = JWildcard.matches("mywildcard", "mywildcard")
+
+        then:
+        matches
+
+        when:
+        matches = JWildcard.matches("Lond?n", "London")
 
         then:
         matches
