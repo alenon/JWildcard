@@ -104,7 +104,7 @@ class JWildcardToRegex {
             cursor = index + jWildcardPairWithIndex.getRule().getKey().length();
         }
 
-        if (cursor < wildcard.length() - 1) {
+        if (cursor <= wildcard.length() - 1) {
             regex.append(Pattern.quote(wildcard.substring(cursor, wildcard.length())));
         }
         return regex.toString();
