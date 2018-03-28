@@ -1,7 +1,35 @@
-# JWildcard - wildcard utilities for Java
+# JWildcard
 
-### Description
-JWildcard is using an ultimate way to convert wildcard to regex (enclosing all not wildcard specific parts by regex quotes, so no special chars processing needed):
+A collection of wildcard utilities. This library helps to convert wildcards to regex string. Wildcards can be declared using custom made rules.
+
+### Getting Started
+
+You can use sources or download it directly using maven or gradle from Bintray JCenter: https://bintray.com/yevdo/jwildcard/jwildcard
+
+Gradle way:
+
+    repositories {
+        jcenter()
+    }
+    
+    dependencies {
+        compile 'com.yevdo:jwildcard:1.2'
+    }
+
+
+Maven way:
+
+    <dependency>
+      <groupId>com.yevdo</groupId>
+      <artifactId>jwildcard</artifactId>
+      <version>1.2</version>
+      <type>pom</type>
+    </dependency>
+
+### API
+API documentation https://alenon.github.io/JWildcard/
+
+### Examples:
 
 This wildcard:
 
@@ -11,37 +39,15 @@ will be converted to this regex string:
 
     "\Qmywil\E.\Qcard\E.*"
 
-###
-API documentation https://alenon.github.io/JWildcard/
-
-### Examples
 If you wish to convert wildcard to regex string use:
 
     JWildcard.wildcardToRegex("mywil?card*");
 
-If you wish to check the matching directly you can use this:
+If you wish to check matching directly you can use this:
 
     JWildcard.matches("mywild*", "mywildcard");
 
 
-Default wildcard rule are "?" -> ".", "*" -> ".*", but you can change the default behaviour if you wish, by simply defining the new rules.
+Default wildcard rule are "?" -> ".", "*" -> ".*", but you can change the default behaviour if you wish to, by simply defining the new rules.
 
     JWildcard.wildcardToRegex(wildcard, rules, strict);
-
-### Installation
-
-You can use sources or download it directly using maven or gradle from Bintray JCenter: https://bintray.com/yevdo/jwildcard/jwildcard
-
-Gradle way:
-
-    compile 'com.yevdo:jwildcard:1.0'
-
-
-Maven way:
-
-    <dependency>
-      <groupId>com.yevdo</groupId>
-      <artifactId>jwildcard</artifactId>
-      <version>1.0</version>
-      <type>pom</type>
-    </dependency>
