@@ -11,6 +11,9 @@ will be converted to this regex string:
 
     "\Qmywil\E.\Qcard\E.*"
 
+###
+API documentation https://alenon.github.io/JWildcard/
+
 ### Examples
 If you wish to convert wildcard to regex string use:
 
