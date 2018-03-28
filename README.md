@@ -6,7 +6,7 @@ A collection of wildcard utilities. This library helps to convert wildcards to r
 
 You can use sources or download it directly using maven or gradle from Bintray JCenter: https://bintray.com/yevdo/jwildcard/jwildcard
 
-Gradle way:
+Gradle <code>build.gradle</code>
 
     repositories {
         jcenter()
@@ -17,7 +17,7 @@ Gradle way:
     }
 
 
-Maven way:
+Maven <code>pom.xml</code>
 
     <dependency>
       <groupId>com.yevdo</groupId>
