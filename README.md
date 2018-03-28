@@ -43,11 +43,10 @@ If you wish to convert wildcard to regex string use:
 
     JWildcard.wildcardToRegex("mywil?card*");
 
-If you wish to check matching directly you can use this:
-
-    JWildcard.matches("mywild*", "mywildcard");
-
-
 Default wildcard rule are "?" -> ".", "*" -> ".*", but you can change the default behaviour if you wish to, by simply defining the new rules.
 
     JWildcard.wildcardToRegex(wildcard, rules, strict);
+
+If you wish to check matching directly you can use this:
+
+    JWildcard.matches("mywild*", "mywildcard");
