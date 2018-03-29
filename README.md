@@ -1,10 +1,13 @@
 # JWildcard
 
+[![Build Status](https://travis-ci.org/alenon/JWildcard.svg?branch=master)](https://travis-ci.org/alenon/JWildcard)
+
 A collection of wildcard utilities. This library helps to convert wildcards to regex string. Wildcards can be declared using custom made rules.
+
 
 ### Getting Started
 
-You can use sources or download it directly using maven or gradle from Bintray JCenter: https://bintray.com/yevdo/jwildcard/jwildcard
+[ ![Download](https://api.bintray.com/packages/yevdo/jwildcard/jwildcard/images/download.svg) ](https://bintray.com/yevdo/jwildcard/jwildcard/_latestVersion)
 
 Gradle <code>build.gradle</code>
 

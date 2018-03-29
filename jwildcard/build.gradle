@@ -19,6 +19,7 @@ apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply plugin: 'java'
 apply plugin: 'idea'
+apply plugin: 'groovy'
 
 dependencies {
     testCompile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.7'
