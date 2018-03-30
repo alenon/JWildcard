@@ -69,85 +69,89 @@ public class JWildcard {
         Matcher matcher = pattern.matcher(text);
         return matcher.matches();
     }
-}
 
-class JWildcardToRegex {
+    // ==================
+    // == Private ZONE ==
+    // ==================
 
-    public static String wildcardToRegex(final String wildcard, final JWildcardRules rules, boolean strict) {
-        if (wildcard == null) {
-            throw new IllegalArgumentException("Wildcard must not be null");
-        }
+    private static class JWildcardToRegex {
 
-        if (rules == null) {
-            throw new IllegalArgumentException("Rules must not be null");
-        }
-
-        List<JWildcardPairWithIndex> listOfOccurrences = getContainedWildcardPairsOrdered(wildcard, rules);
-        String regex = getRegexString(wildcard, listOfOccurrences);
-
-        if (strict) {
-            return "^" + regex + "$";
-        } else {
-            return regex;
-        }
-    }
-
-    private static String getRegexString(String wildcard, List<JWildcardPairWithIndex> listOfOccurrences) {
-        StringBuilder regex = new StringBuilder();
-        int cursor = 0;
-        for (JWildcardPairWithIndex jWildcardPairWithIndex : listOfOccurrences) {
-            int index = jWildcardPairWithIndex.getIndex();
-            if (index != 0) {
-                regex.append(Pattern.quote(wildcard.substring(cursor, index)));
+        private static String wildcardToRegex(final String wildcard, final JWildcardRules rules, boolean strict) {
+            if (wildcard == null) {
+                throw new IllegalArgumentException("Wildcard must not be null");
             }
-            regex.append(jWildcardPairWithIndex.getRule().getValue());
-            cursor = index + jWildcardPairWithIndex.getRule().getKey().length();
+
+            if (rules == null) {
+                throw new IllegalArgumentException("Rules must not be null");
+            }
+
+            List<JWildcardPairWithIndex> listOfOccurrences = getContainedWildcardPairsOrdered(wildcard, rules);
+            String regex = getRegexString(wildcard, listOfOccurrences);
+
+            if (strict) {
+                return "^" + regex + "$";
+            } else {
+                return regex;
+            }
         }
 
-        if (cursor <= wildcard.length() - 1) {
-            regex.append(Pattern.quote(wildcard.substring(cursor, wildcard.length())));
-        }
-        return regex.toString();
-    }
-
-    private static List<JWildcardPairWithIndex> getContainedWildcardPairsOrdered(final String wildcard, final JWildcardRules rules) {
-        List<JWildcardPairWithIndex> listOfOccurrences = new LinkedList<>();
-        rules.getRules().forEach(jWildcardPair -> {
-            int index = -1;
-            do {
-                index = wildcard.indexOf(jWildcardPair.getKey(), index + 1);
-                if (index > -1) {
-                    listOfOccurrences.add(new JWildcardPairWithIndex(jWildcardPair, index));
+        private static String getRegexString(String wildcard, List<JWildcardPairWithIndex> listOfOccurrences) {
+            StringBuilder regex = new StringBuilder();
+            int cursor = 0;
+            for (JWildcardPairWithIndex jWildcardPairWithIndex : listOfOccurrences) {
+                int index = jWildcardPairWithIndex.getIndex();
+                if (index != 0) {
+                    regex.append(Pattern.quote(wildcard.substring(cursor, index)));
                 }
-            } while (index > -1);
-        });
-
-        listOfOccurrences.sort((o1, o2) -> {
-            if (o1.getIndex() == o2.getIndex()) {
-                return 0;
+                regex.append(jWildcardPairWithIndex.getRule().getValue());
+                cursor = index + jWildcardPairWithIndex.getRule().getKey().length();
             }
 
-            return o1.getIndex() > o2.getIndex() ? 1 : -1;
-        });
+            if (cursor <= wildcard.length() - 1) {
+                regex.append(Pattern.quote(wildcard.substring(cursor, wildcard.length())));
+            }
+            return regex.toString();
+        }
 
-        return listOfOccurrences;
+        private static List<JWildcardPairWithIndex> getContainedWildcardPairsOrdered(final String wildcard, final JWildcardRules rules) {
+            List<JWildcardPairWithIndex> listOfOccurrences = new LinkedList<>();
+            for (JWildcardRule jWildcardPair : rules.getRules()) {
+                int index = -1;
+                do {
+                    index = wildcard.indexOf(jWildcardPair.getKey(), index + 1);
+                    if (index > -1) {
+                        listOfOccurrences.add(new JWildcardPairWithIndex(jWildcardPair, index));
+                    }
+                } while (index > -1);
+            }
+
+            listOfOccurrences.sort((o1, o2) -> {
+                if (o1.getIndex() == o2.getIndex()) {
+                    return 0;
+                }
+
+                return o1.getIndex() > o2.getIndex() ? 1 : -1;
+            });
+
+            return listOfOccurrences;
+        }
     }
-}
 
-class JWildcardPairWithIndex {
-    private final JWildcardRule rule;
-    private final int index;
+    private static class JWildcardPairWithIndex {
+        private final JWildcardRule rule;
+        private final int index;
 
-    JWildcardPairWithIndex(JWildcardRule rule, int index) {
-        this.rule = rule;
-        this.index = index;
-    }
+        JWildcardPairWithIndex(JWildcardRule rule, int index) {
+            this.rule = rule;
+            this.index = index;
+        }
 
-    public JWildcardRule getRule() {
-        return rule;
-    }
+        private JWildcardRule getRule() {
+            return rule;
+        }
 
-    public int getIndex() {
-        return index;
+        private int getIndex() {
+            return index;
+        }
     }
 }
