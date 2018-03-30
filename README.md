@@ -10,46 +10,47 @@ A collection of wildcard utilities. This library helps to convert wildcards to r
 [ ![Download](https://api.bintray.com/packages/yevdo/jwildcard/jwildcard/images/download.svg) ](https://bintray.com/yevdo/jwildcard/jwildcard/_latestVersion)
 
 Gradle <code>build.gradle</code>
+```gradle
+repositories {
+    jcenter()
+}
 
-    repositories {
-        jcenter()
-    }
-    
-    dependencies {
-        compile 'com.yevdo:jwildcard:1.2'
-    }
-
+dependencies {
+    compile 'com.yevdo:jwildcard:1.2'
+}
+```
 
 Maven <code>pom.xml</code>
-
-    <dependency>
-      <groupId>com.yevdo</groupId>
-      <artifactId>jwildcard</artifactId>
-      <version>1.2</version>
-      <type>pom</type>
-    </dependency>
-
+```xml
+<dependency>
+  <groupId>com.yevdo</groupId>
+  <artifactId>jwildcard</artifactId>
+  <version>1.2</version>
+  <type>pom</type>
+</dependency>
+```
 ### API
 API documentation https://alenon.github.io/JWildcard/
 
 ### Examples:
 
 This wildcard:
-
-    "mywil?card*"
-
+```java
+"mywil?card*"
+```
 will be converted to this regex string:
-
-    "\Qmywil\E.\Qcard\E.*"
-
+```java
+"\Qmywil\E.\Qcard\E.*"
+```
 If you wish to convert wildcard to regex string use:
-
-    JWildcard.wildcardToRegex("mywil?card*");
-
+```java
+JWildcard.wildcardToRegex("mywil?card*");
+```
 Default wildcard rule are "?" -> ".", "*" -> ".*", but you can change the default behaviour if you wish to, by simply defining the new rules.
-
-    JWildcard.wildcardToRegex(wildcard, rules, strict);
-
+```java
+JWildcard.wildcardToRegex(wildcard, rules, strict);
+```
 If you wish to check matching directly you can use this:
-
-    JWildcard.matches("mywild*", "mywildcard");
+```java
+JWildcard.matches("mywild*", "mywildcard");
+```
