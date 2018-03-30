@@ -5,53 +5,47 @@ package com.yevdo.jwildcard;
  * Created on 26/03/2018
  */
 public class JWildcardRule {
-    private final String key;
-    private final String value;
+    private final String source;
+    private final String target;
 
     /**
      * JWildcardRule - represents wildcard rule model
-     * @param key a substring to seek for, can't be null
-     * @param value a substring to replace by, can't be null
+     * @param source a substring to seek for, can't be null
+     * @param target a substring to replace by, can't be null
      * @throws IllegalArgumentException if one of the above (key, value) is null
      */
-    public JWildcardRule(String key, String value) {
-        if (key == null || value == null) {
+    public JWildcardRule(String source, String target) {
+        if (source == null || target == null) {
             throw new IllegalArgumentException("Empty values are not allowed");
         }
 
-        this.key = key;
-        this.value = value;
+        this.source = source;
+        this.target = target;
     }
 
-    public String getKey() {
-        return key;
+    public String getSource() {
+        return source;
     }
 
-    public String getValue() {
-        return value;
+    public String getTarget() {
+        return target;
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        if (obj == null) {
-            return false;
-        }
+        JWildcardRule that = (JWildcardRule) o;
 
-        if (!JWildcardRule.class.isAssignableFrom(obj.getClass())) {
-            return false;
-        }
-
-        final JWildcardRule other = (JWildcardRule) obj;
-        return this.key.equals(other.key) && this.value.equals(other.value);
-
+        if (!source.equals(that.source)) return false;
+        return target.equals(that.target);
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + this.key.hashCode();
-        hash = 53 * hash + this.value.hashCode();
-        return hash;
+        int result = source.hashCode();
+        result = 31 * result + target.hashCode();
+        return result;
     }
 }
