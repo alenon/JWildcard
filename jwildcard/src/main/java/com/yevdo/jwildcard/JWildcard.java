@@ -13,9 +13,9 @@ import java.util.regex.Pattern;
  */
 public class JWildcard {
 
-    private static final JWildcardRule QUESTION_MARK = new JWildcardRule("?", ".");
-    private static final JWildcardRule STAR = new JWildcardRule("*", ".*");
-    private static final JWildcardRules DEFAULT_RULES = new JWildcardRules(new HashSet<>(Arrays.asList(QUESTION_MARK, STAR)));
+    private static final JWildcardRule QUESTION_MARK_RULE = new JWildcardRule("?", ".");
+    private static final JWildcardRule STAR_RULE = new JWildcardRule("*", ".*");
+    private static final JWildcardRules DEFAULT_RULES = new JWildcardRules(new HashSet<>(Arrays.asList(QUESTION_MARK_RULE, STAR_RULE)));
 
     /**
      * Converts wildcard to regex using default set of rules and strict flag set to true
@@ -85,7 +85,7 @@ public class JWildcard {
                 throw new IllegalArgumentException("Rules must not be null");
             }
 
-            List<JWildcardPairWithIndex> listOfOccurrences = getContainedWildcardPairsOrdered(wildcard, rules);
+            List<JWildcardRuleWithIndex> listOfOccurrences = getContainedWildcardPairsOrdered(wildcard, rules);
             String regex = getRegexString(wildcard, listOfOccurrences);
 
             if (strict) {
@@ -95,16 +95,16 @@ public class JWildcard {
             }
         }
 
-        private static String getRegexString(String wildcard, List<JWildcardPairWithIndex> listOfOccurrences) {
+        private static String getRegexString(String wildcard, List<JWildcardRuleWithIndex> listOfOccurrences) {
             StringBuilder regex = new StringBuilder();
             int cursor = 0;
-            for (JWildcardPairWithIndex jWildcardPairWithIndex : listOfOccurrences) {
-                int index = jWildcardPairWithIndex.getIndex();
+            for (JWildcardRuleWithIndex jWildcardRuleWithIndex : listOfOccurrences) {
+                int index = jWildcardRuleWithIndex.getIndex();
                 if (index != 0) {
                     regex.append(Pattern.quote(wildcard.substring(cursor, index)));
                 }
-                regex.append(jWildcardPairWithIndex.getRule().getValue());
-                cursor = index + jWildcardPairWithIndex.getRule().getKey().length();
+                regex.append(jWildcardRuleWithIndex.getRule().getTarget());
+                cursor = index + jWildcardRuleWithIndex.getRule().getSource().length();
             }
 
             if (cursor <= wildcard.length() - 1) {
@@ -113,14 +113,14 @@ public class JWildcard {
             return regex.toString();
         }
 
-        private static List<JWildcardPairWithIndex> getContainedWildcardPairsOrdered(final String wildcard, final JWildcardRules rules) {
-            List<JWildcardPairWithIndex> listOfOccurrences = new LinkedList<>();
-            for (JWildcardRule jWildcardPair : rules.getRules()) {
+        private static List<JWildcardRuleWithIndex> getContainedWildcardPairsOrdered(final String wildcard, final JWildcardRules rules) {
+            List<JWildcardRuleWithIndex> listOfOccurrences = new LinkedList<>();
+            for (JWildcardRule jWildcardRuleWithIndex : rules.getRules()) {
                 int index = -1;
                 do {
-                    index = wildcard.indexOf(jWildcardPair.getKey(), index + 1);
+                    index = wildcard.indexOf(jWildcardRuleWithIndex.getSource(), index + 1);
                     if (index > -1) {
-                        listOfOccurrences.add(new JWildcardPairWithIndex(jWildcardPair, index));
+                        listOfOccurrences.add(new JWildcardRuleWithIndex(jWildcardRuleWithIndex, index));
                     }
                 } while (index > -1);
             }
@@ -137,11 +137,11 @@ public class JWildcard {
         }
     }
 
-    private static class JWildcardPairWithIndex {
+    private static class JWildcardRuleWithIndex {
         private final JWildcardRule rule;
         private final int index;
 
-        JWildcardPairWithIndex(JWildcardRule rule, int index) {
+        JWildcardRuleWithIndex(JWildcardRule rule, int index) {
             this.rule = rule;
             this.index = index;
         }
