@@ -8,6 +8,20 @@ import spock.lang.Specification
  */
 class JWildcardRuleSpec extends Specification {
 
+    def "test constructor"() {
+        when: "source is null"
+        new JWildcardRule(null, "abc")
+
+        then:
+        thrown(IllegalArgumentException)
+
+        when: "target is null"
+        new JWildcardRule("abc", null)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
     def "test equals"() {
         given:
         JWildcardRule rule1 = new JWildcardRule("source1", "target")
