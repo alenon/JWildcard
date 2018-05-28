@@ -63,7 +63,7 @@ public class JWildcardRules {
      * @return <tt>true</tt> if this set contained the specified element
      */
     public boolean removeRule(JWildcardRule rule) {
-        if (rules == null) {
+        if (rule == null) {
             throw new IllegalArgumentException("Rule to remove can't be null");
         }
 
