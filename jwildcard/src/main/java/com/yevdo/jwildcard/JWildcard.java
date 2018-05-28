@@ -17,6 +17,10 @@ public class JWildcard {
     private static final JWildcardRule STAR_RULE = new JWildcardRule("*", ".*");
     private static final JWildcardRules DEFAULT_RULES = new JWildcardRules(new HashSet<>(Arrays.asList(QUESTION_MARK_RULE, STAR_RULE)));
 
+    private JWildcard() {
+        throw new IllegalStateException("JWildcard is a utility class, and can't be instantiated");
+    }
+
     /**
      * Converts wildcard to regex using default set of rules and strict flag set to true
      *
