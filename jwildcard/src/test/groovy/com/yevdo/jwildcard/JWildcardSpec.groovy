@@ -1,6 +1,5 @@
-import com.yevdo.jwildcard.JWildcard
-import com.yevdo.jwildcard.JWildcardRule
-import com.yevdo.jwildcard.JWildcardRules
+package com.yevdo.jwildcard
+
 import spock.lang.Specification
 
 /**
@@ -76,13 +75,13 @@ class JWildcardSpec extends Specification {
 
     def "check matcher"() {
 
-        when:  "wildcard is null"
+        when: "wildcard is null"
         JWildcard.matches(null, "mywildcard")
 
         then:
         thrown(IllegalArgumentException)
 
-        when:  "text is null"
+        when: "text is null"
         JWildcard.matches("mywild*", null)
 
         then:
