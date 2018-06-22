@@ -20,6 +20,24 @@ class JWildcardRuleSpec extends Specification {
 
         then:
         thrown(IllegalArgumentException)
+
+        when: "valid constructor"
+        new JWildcardRule("abc", "cde")
+
+        then:
+        noExceptionThrown()
+
+        when: "regexRule is null"
+        new JWildcardRule(null)
+
+        then:
+        thrown(IllegalArgumentException)
+
+        when: "valid constructor"
+        new JWildcardRule("abc")
+
+        then:
+        noExceptionThrown()
     }
 
     def "test equals"() {

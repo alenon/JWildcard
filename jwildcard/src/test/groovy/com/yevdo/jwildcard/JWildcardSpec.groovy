@@ -71,6 +71,16 @@ class JWildcardSpec extends Specification {
 
         then:
         regex == "a+\\Qbc*efg\\E"
+
+        when:
+        JWildcardRule regexRule = new JWildcardRule("[4-9]")
+        rules = new JWildcardRules([regexRule].toSet())
+        regex = JWildcard.wildcardToRegex("test[4-9]", rules, false)
+
+        then:
+        regex == "\\Qtest\\E[4-9]"
+        "test3" != ~regex
+        "test6" ==~ regex
     }
 
     def "check matcher"() {

@@ -1,15 +1,9 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-}
-
 plugins {
     id "com.jfrog.bintray" version "1.7"
     id "org.sonarqube" version "2.6"
 }
 
-version '1.2.1'
+version jwildcardVersion
 group 'com.yevdo'
 
 repositories {
@@ -48,10 +42,6 @@ bintray {
             vcsTag = project.version
         }
     }
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.4'
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
