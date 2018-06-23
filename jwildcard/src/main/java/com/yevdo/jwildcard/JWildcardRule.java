@@ -23,6 +23,21 @@ public class JWildcardRule {
         this.target = target;
     }
 
+    /**
+     * JWildcardRule - represents wildcard rule model
+     *
+     * @param regex a substring to leave as it is without wrapping by quotes, can't be null
+     * @throws IllegalArgumentException if one of the above (key, value) is null
+     */
+    public JWildcardRule(String regex) {
+        if (regex == null) {
+            throw new IllegalArgumentException("Empty values are not allowed");
+        }
+
+        this.source = regex;
+        this.target = regex;
+    }
+
     public String getSource() {
         return source;
     }
