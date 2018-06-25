@@ -38,7 +38,7 @@ bintray {
         publicDownloadNumbers = true
         version {
             name = project.version
-            desc = 'JWildcard'
+            desc = 'JWildcard - wildcard utilities for Java'
             vcsTag = project.version
 
             gpg {
@@ -64,6 +64,27 @@ artifacts {
     archives javadocJar
 }
 
+def pomConfig = {
+    licenses {
+        license {
+            name "MIT"
+            url "https://github.com/alenon/JWildcard/blob/master/LICENSE"
+            distribution "repo"
+        }
+    }
+    developers {
+        developer {
+            id "alenon"
+            name "Yevdo Abramov"
+            email "lenon.abr@gmail.com"
+        }
+    }
+
+    scm {
+        url "https://github.com/alenon/JWildcard"
+    }
+}
+
 publishing {
     publications {
         publisher(MavenPublication) {
@@ -74,6 +95,14 @@ publishing {
 
             artifact sourcesJar
             artifact javadocJar
+
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', 'JWildcard - wildcard utilities for Java')
+                root.appendNode('name', 'JWildcard')
+                root.appendNode('url', 'https://github.com/alenon/JWildcard')
+                root.children().last() + pomConfig
+            }
         }
     }
 }
