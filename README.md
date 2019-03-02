@@ -49,7 +49,7 @@ If you wish to convert wildcard to regex string use:
 ```java
 JWildcard.wildcardToRegex("mywil?card*");
 ```
-Default wildcard rules are: "?" -> ".", "*" -> ".*", but you can change the default behaviour if you wish to, by simply defining the new rules.
+Default wildcard rules are: "?" -> ".", "\*" -> ".\*", but you can change the default behaviour if you wish to, by simply defining the new rules.
 ```java
 JWildcard.wildcardToRegex(wildcard, rules, strict);
 ```
