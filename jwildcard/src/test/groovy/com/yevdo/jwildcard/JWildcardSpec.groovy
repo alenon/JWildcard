@@ -40,6 +40,56 @@ class JWildcardSpec extends Specification {
         regex == ".\\Qcard\\E.*\\Qwild\\E"
     }
 
+    def "convert wildcard to sql pattern"() {
+        when: 'nothing to change'
+        String sqlPattern = JWildcard.wildcardToSqlPattern("wildCard")
+
+        then:
+        sqlPattern == "wildCard"
+
+        when: 'ends with *'
+        sqlPattern = JWildcard.wildcardToSqlPattern("wildCard*")
+
+        then:
+        sqlPattern == "wildCard%"
+
+        when: 'starts with *'
+        sqlPattern = JWildcard.wildcardToSqlPattern("*wildCard")
+
+        then:
+        sqlPattern == "%wildCard"
+
+        when: 'contains *'
+        sqlPattern = JWildcard.wildcardToSqlPattern("wild*Ca*rd")
+
+        then:
+        sqlPattern == "wild%Ca%rd"
+
+        when: 'ends with ?'
+        sqlPattern = JWildcard.wildcardToSqlPattern("wildCard?")
+
+        then:
+        sqlPattern == "wildCard_"
+
+        when: 'starts with ?'
+        sqlPattern = JWildcard.wildcardToSqlPattern("?wildCard")
+
+        then:
+        sqlPattern == "_wildCard"
+
+        when: 'contains ?'
+        sqlPattern = JWildcard.wildcardToSqlPattern("wild?Ca?rd")
+
+        then:
+        sqlPattern == "wild_Ca_rd"
+
+        when: 'both ? and *'
+        sqlPattern = JWildcard.wildcardToSqlPattern("?wild*Ca?rd*")
+
+        then:
+        sqlPattern == "_wild%Ca_rd%"
+    }
+
     def "check wildcard to regex with rules"() {
         given:
         JWildcardRules rules = null

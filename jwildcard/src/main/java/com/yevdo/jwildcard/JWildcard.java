@@ -13,9 +13,13 @@ import java.util.regex.Pattern;
  */
 public class JWildcard {
 
-    private static final JWildcardRule QUESTION_MARK_RULE = new JWildcardRule("?", ".");
-    private static final JWildcardRule STAR_RULE = new JWildcardRule("*", ".*");
-    private static final JWildcardRules DEFAULT_RULES = new JWildcardRules(new HashSet<>(Arrays.asList(QUESTION_MARK_RULE, STAR_RULE)));
+    private static final JWildcardRule REGEX_QUESTION_MARK_RULE = new JWildcardRule("?", ".");
+    private static final JWildcardRule REGEX_STAR_RULE = new JWildcardRule("*", ".*");
+    private static final JWildcardRules DEFAULT_REGEX_RULES = new JWildcardRules(new HashSet<>(Arrays.asList(REGEX_QUESTION_MARK_RULE, REGEX_STAR_RULE)));
+
+    private static final JWildcardRule SQL_QUESTION_MARK_RULE = new JWildcardRule("?", "_");
+    private static final JWildcardRule SQL_STAR_RULE = new JWildcardRule("*", "%");
+    private static final JWildcardRules DEFAULT_SQL_RULES = new JWildcardRules(new HashSet<>(Arrays.asList(SQL_QUESTION_MARK_RULE, SQL_STAR_RULE)));
 
     private JWildcard() {
         throw new IllegalStateException("JWildcard is a utility class, and can't be instantiated");
@@ -28,7 +32,7 @@ public class JWildcard {
      * @return <tt>string</tt> representation of regex
      */
     public static String wildcardToRegex(final String wildcard) {
-        return wildcardToRegex(wildcard, DEFAULT_RULES, true);
+        return wildcardToRegex(wildcard, DEFAULT_REGEX_RULES, true);
     }
 
     /**
@@ -39,7 +43,7 @@ public class JWildcard {
      * @return <tt>string</tt> representation of regex
      */
     public static String wildcardToRegex(final String wildcard, boolean strict) {
-        return wildcardToRegex(wildcard, DEFAULT_RULES, strict);
+        return wildcardToRegex(wildcard, DEFAULT_REGEX_RULES, strict);
     }
 
     /**
@@ -53,6 +57,16 @@ public class JWildcard {
      */
     public static String wildcardToRegex(final String wildcard, final JWildcardRules rules, boolean strict) {
         return JWildcardToRegex.wildcardToRegex(wildcard, rules, strict);
+    }
+
+    /**
+     * Converts wildcard to sql pattern using default set of rules
+     *
+     * @param wildcard a string representation of wildcard
+     * @return <tt>string</tt> representation of sql pattern
+     */
+    public static String wildcardToSqlPattern(final String wildcard) {
+        return JWildcardToSql.wildcardToSqlPattern(wildcard, DEFAULT_SQL_RULES);
     }
 
     /**
@@ -77,6 +91,32 @@ public class JWildcard {
     // ==================
     // == Private ZONE ==
     // ==================
+    private static class JWildcardToSql {
+        private static String wildcardToSqlPattern(final String wildcard, final JWildcardRules rules) {
+
+            List<JWildcardRuleWithIndex> listOfOccurrences = getContainedWildcardPairsOrdered(wildcard, rules);
+            return getSqlString(wildcard, listOfOccurrences);
+        }
+
+        private static String getSqlString(String wildcard, List<JWildcardRuleWithIndex> listOfOccurrences) {
+            StringBuilder sql = new StringBuilder();
+            int cursor = 0;
+            for (JWildcardRuleWithIndex jWildcardRuleWithIndex : listOfOccurrences) {
+                int index = jWildcardRuleWithIndex.getIndex();
+                if (index != 0) {
+                    sql.append(wildcard.substring(cursor, index));
+                }
+                sql.append(jWildcardRuleWithIndex.getRule().getTarget());
+                cursor = index + jWildcardRuleWithIndex.getRule().getSource().length();
+            }
+
+            if (cursor <= wildcard.length() - 1) {
+                sql.append(wildcard.substring(cursor, wildcard.length()));
+            }
+
+            return sql.toString();
+        }
+    }
 
     private static class JWildcardToRegex {
 
@@ -116,29 +156,29 @@ public class JWildcard {
             }
             return regex.toString();
         }
+    }
 
-        private static List<JWildcardRuleWithIndex> getContainedWildcardPairsOrdered(final String wildcard, final JWildcardRules rules) {
-            List<JWildcardRuleWithIndex> listOfOccurrences = new LinkedList<>();
-            for (JWildcardRule jWildcardRuleWithIndex : rules.getRules()) {
-                int index = -1;
-                do {
-                    index = wildcard.indexOf(jWildcardRuleWithIndex.getSource(), index + 1);
-                    if (index > -1) {
-                        listOfOccurrences.add(new JWildcardRuleWithIndex(jWildcardRuleWithIndex, index));
-                    }
-                } while (index > -1);
+    private static List<JWildcardRuleWithIndex> getContainedWildcardPairsOrdered(final String wildcard, final JWildcardRules rules) {
+        List<JWildcardRuleWithIndex> listOfOccurrences = new LinkedList<>();
+        for (JWildcardRule jWildcardRuleWithIndex : rules.getRules()) {
+            int index = -1;
+            do {
+                index = wildcard.indexOf(jWildcardRuleWithIndex.getSource(), index + 1);
+                if (index > -1) {
+                    listOfOccurrences.add(new JWildcardRuleWithIndex(jWildcardRuleWithIndex, index));
+                }
+            } while (index > -1);
+        }
+
+        listOfOccurrences.sort((o1, o2) -> {
+            if (o1.getIndex() == o2.getIndex()) {
+                return 0;
             }
 
-            listOfOccurrences.sort((o1, o2) -> {
-                if (o1.getIndex() == o2.getIndex()) {
-                    return 0;
-                }
+            return o1.getIndex() > o2.getIndex() ? 1 : -1;
+        });
 
-                return o1.getIndex() > o2.getIndex() ? 1 : -1;
-            });
-
-            return listOfOccurrences;
-        }
+        return listOfOccurrences;
     }
 
     private static class JWildcardRuleWithIndex {
