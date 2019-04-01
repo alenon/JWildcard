@@ -57,3 +57,8 @@ If you wish to check matching directly you can use this:
 ```java
 JWildcard.matches("mywild*", "mywildcard");
 ```
+
+If wish to convert wildcard string to SQL like pattern:
+```java
+JWildcard.wildcardToSqlPattern("?wild*Ca?rd*") // outputs this => _wild%Ca_rd%
+```
