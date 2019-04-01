@@ -60,9 +60,8 @@ public class JWildcard {
     }
 
     /**
-     * @since 1.4
      * Converts wildcard to sql pattern using default set of rules
-     *
+     * @since 1.4
      * @param wildcard a string representation of wildcard
      * @return <tt>string</tt> representation of sql pattern
      */
