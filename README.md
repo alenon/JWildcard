@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.yevdo:jwildcard:1.3'
+    compile 'com.yevdo:jwildcard:1.4'
 }
 ```
 
@@ -28,7 +28,7 @@ Maven <code>pom.xml</code>
 <dependency>
   <groupId>com.yevdo</groupId>
   <artifactId>jwildcard</artifactId>
-  <version>1.3</version>
+  <version>1.4</version>
   <type>pom</type>
 </dependency>
 ```
