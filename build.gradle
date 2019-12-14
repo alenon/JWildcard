@@ -3,7 +3,3 @@ buildscript {
         jcenter()
     }
 }
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.8'
-}

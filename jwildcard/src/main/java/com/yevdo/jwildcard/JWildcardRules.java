@@ -33,7 +33,7 @@ public class JWildcardRules {
      * Add a rule to the existing rules
      *
      * @param rule JWildcardRule
-     * @return <tt>true</tt> if the rules set did not already contain the specified element
+     * @return <code>true</code> if the rules set did not already contain the specified element
      */
     public boolean addRule(JWildcardRule rule) {
         if (rule == null) {
@@ -46,7 +46,7 @@ public class JWildcardRules {
      * Add a set of rules to the existing rules
      *
      * @param rules a collection of JWildcardRule
-     * @return <tt>true</tt> if the rules set did not already contain the specified elements
+     * @return <code>true</code> if the rules set did not already contain the specified elements
      */
     public boolean addRules(Collection<JWildcardRule> rules) {
         if (rules == null) {
@@ -60,7 +60,7 @@ public class JWildcardRules {
      * Removes the specified element from this set if it is present
      *
      * @param rule JWildcardRule
-     * @return <tt>true</tt> if this set contained the specified element
+     * @return <code>true</code> if this set contained the specified element
      */
     public boolean removeRule(JWildcardRule rule) {
         if (rule == null) {

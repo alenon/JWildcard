@@ -10,7 +10,6 @@ repositories {
     jcenter()
 }
 
-apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply plugin: 'java'
 apply plugin: 'idea'
@@ -18,9 +17,9 @@ apply plugin: 'groovy'
 apply plugin: 'jacoco'
 
 dependencies {
-    testCompile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.7'
-    testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4'
-    testCompile group: 'cglib', name: 'cglib-nodep', version: '3.2.4'
+    testImplementation group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.7'
+    testImplementation group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4'
+    testImplementation group: 'cglib', name: 'cglib-nodep', version: '3.2.4'
 }
 
 
@@ -52,6 +51,11 @@ bintray {
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
     from sourceSets.main.allSource
+}
+
+javadoc {
+    title "JWildcard v$jwildcardVersion"
+    destinationDir file("${rootDir.path}/docs")
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
@@ -108,7 +112,7 @@ publishing {
 }
 
 jacoco {
-    toolVersion = "0.8.1"
+    toolVersion = "0.8.5"
 }
 
 sonarqube {

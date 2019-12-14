@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"com.yevdo.jwildcard","l":"JWildcard"},{"p":"com.yevdo.jwildcard","l":"JWildcardRule"},{"p":"com.yevdo.jwildcard","l":"JWildcardRules"}]
