@@ -29,7 +29,7 @@ public class JWildcard {
      * Converts wildcard to regex using default set of rules and strict flag set to true
      *
      * @param wildcard a string representation of wildcard
-     * @return <tt>string</tt> representation of regex
+     * @return <code>string</code> representation of regex
      */
     public static String wildcardToRegex(final String wildcard) {
         return wildcardToRegex(wildcard, DEFAULT_REGEX_RULES, true);
@@ -40,7 +40,7 @@ public class JWildcard {
      *
      * @param wildcard a string representation of wildcard
      * @param strict   a flag which indicates whether to wrap the result regex with ^ and $
-     * @return <tt>string</tt> representation of regex
+     * @return <code>string</code> representation of regex
      */
     public static String wildcardToRegex(final String wildcard, boolean strict) {
         return wildcardToRegex(wildcard, DEFAULT_REGEX_RULES, strict);
@@ -52,7 +52,7 @@ public class JWildcard {
      * @param wildcard a string representation of wildcard
      * @param rules    a collection of desired wildcard rules to use in conversion process
      * @param strict   a flag which indicates whether to wrap the result regex with ^ and $
-     * @return <tt>string</tt> representation of regex
+     * @return <code>string</code> representation of regex
      * @throws IllegalArgumentException if one of the above is null (wildcard, rules)
      */
     public static String wildcardToRegex(final String wildcard, final JWildcardRules rules, boolean strict) {
@@ -61,9 +61,10 @@ public class JWildcard {
 
     /**
      * Converts wildcard to sql pattern using default set of rules
-     * @since 1.4
+     *
      * @param wildcard a string representation of wildcard
-     * @return <tt>string</tt> representation of sql pattern
+     * @return <code>string</code> representation of sql pattern
+     * @since 1.4
      */
     public static String wildcardToSqlPattern(final String wildcard) {
         return JWildcardToSql.wildcardToSqlPattern(wildcard, DEFAULT_SQL_RULES);
@@ -74,8 +75,8 @@ public class JWildcard {
      * and strict flag set to true, and then run matcher on text
      *
      * @param wildcard the wildcard
-     * @param text the string to be matched at provided wildcard
-     * @return <tt>true</tt> if the text matches the wildcard
+     * @param text     the string to be matched at provided wildcard
+     * @return <code>true</code> if the text matches the wildcard
      * @throws IllegalArgumentException if one of the above is null (wildcard, text)
      */
     public static boolean matches(String wildcard, String text) {
