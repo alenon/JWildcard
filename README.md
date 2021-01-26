@@ -5,7 +5,7 @@ A collection of wildcard utilities. This library helps to convert wildcards to r
 
 ### Getting Started
 
-![Java CI with Maven](https://github.com/alenon/JWildcard/workflows/Java%20CI%20with%20Maven/badge.svg)
+![Master Build](https://github.com/alenon/JWildcard/workflows/Java%20CI%20with%20Maven/badge.svg)
 
 [![Download](https://api.bintray.com/packages/yevdo/jwildcard/jwildcard/images/download.svg)](https://bintray.com/yevdo/jwildcard/jwildcard/_latestVersion)
 <br />
