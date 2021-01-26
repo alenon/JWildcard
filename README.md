@@ -29,8 +29,7 @@ Maven <code>pom.xml</code>
 <dependency>
   <groupId>com.yevdo</groupId>
   <artifactId>jwildcard</artifactId>
-  <version>1.4</version>
-  <type>pom</type>
+  <version>1.5</version>
 </dependency>
 ```
 ### API
