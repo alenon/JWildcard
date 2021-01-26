@@ -5,7 +5,8 @@ A collection of wildcard utilities. This library helps to convert wildcards to r
 
 ### Getting Started
 
-[![Build Status](https://travis-ci.org/alenon/JWildcard.svg?branch=master)](https://travis-ci.org/alenon/JWildcard)
+![Master Build](https://github.com/alenon/JWildcard/workflows/Java%20CI%20with%20Maven/badge.svg)
+
 [![Download](https://api.bintray.com/packages/yevdo/jwildcard/jwildcard/images/download.svg)](https://bintray.com/yevdo/jwildcard/jwildcard/_latestVersion)
 <br />
 [![Sonar quality gates](https://sonarcloud.io/api/project_badges/measure?project=com.yevdo.jwildcard&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.yevdo.jwildcard)
@@ -28,8 +29,7 @@ Maven <code>pom.xml</code>
 <dependency>
   <groupId>com.yevdo</groupId>
   <artifactId>jwildcard</artifactId>
-  <version>1.4</version>
-  <type>pom</type>
+  <version>1.5</version>
 </dependency>
 ```
 ### API
