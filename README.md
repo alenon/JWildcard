@@ -26,6 +26,14 @@ dependencies {
 
 Maven <code>pom.xml</code>
 ```xml
+<distributionManagement>
+    <repository>
+        <id>central</id>
+        <name>a0yytejrantuj-artifactory-primary-0-releases</name>
+        <url>https://alenon.jfrog.io/artifactory/maven-releases</url>
+    </repository>
+</distributionManagement>
+
 <dependency>
   <groupId>com.yevdo</groupId>
   <artifactId>jwildcard</artifactId>
