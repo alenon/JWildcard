@@ -25,6 +25,12 @@ jobs:
       run: mvn -B package --file jwildcard/pom.xml
 
     - name: Publish to GitHub Packages Apache Maven
-      run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml --file jwildcard/pom.xml
+      run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml --file jwildcard/pom.xml -P github
       env:
         GITHUB_TOKEN: ${{ github.token }}
+
+    - name: Publish to Artifactory
+      run: mvn deploy -s jwildcard/.mvn/local-settings.xml --file jwildcard/pom.xml
+      env:
+        ARTIFACTORY_USER: ${{ secrets.ARTIFACTORY_USER }}
+        ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
