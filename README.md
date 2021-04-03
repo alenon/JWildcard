@@ -59,16 +59,16 @@ If you wish to convert wildcard to regex string use:
 ```java
 JWildcard.wildcardToRegex("mywil?card*");
 ```
-Default wildcard rules are: "?" -> ".", "\*" -> ".\*", but you can change the default behaviour if you wish to, by simply defining the new rules.
+Default wildcard rules are: "?" -> ".", "\*" -> ".\*", but you can change the default behaviour, by simply defining the new rules:
 ```java
 JWildcard.wildcardToRegex(wildcard, rules, strict);
 ```
-If you wish to check matching directly you can use this:
+If you wish to check matching directly you can use the following example:
 ```java
 JWildcard.matches("mywild*", "mywildcard");
 ```
 
-If wish to convert wildcard string to SQL like pattern:
+In order to convert wildcard string into SQL like pattern:
 ```java
 JWildcard.wildcardToSqlPattern("?wild*Ca?rd*") // outputs this => _wild%Ca_rd%
 ```
