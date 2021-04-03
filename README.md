@@ -1,7 +1,36 @@
 # JWildcard
 
-A collection of wildcard utilities. This library helps to convert wildcards to regex string. Wildcards can be declared using custom made rules.
+A collection of wildcard utilities. 
+This library helps to convert wildcards into regex string. 
+Wildcards can be declared using custom made rules.
 
+### Examples:
+
+This wildcard:
+```java
+"mywil?card*"
+```
+will be converted to this regex string:
+```java
+"\Qmywil\E.\Qcard\E.*"
+```
+In order to convert wildcard into regex string use the following example:
+```java
+JWildcard.wildcardToRegex("mywil?card*");
+```
+Default wildcard rules are: "?" -> ".", "\*" -> ".\*", but you can change the default behaviour, by simply defining the new rules:
+```java
+JWildcard.wildcardToRegex(wildcard, rules, strict);
+```
+In order to check matching directly you can use the following example:
+```java
+JWildcard.matches("mywild*", "mywildcard");
+```
+
+In order to convert wildcard string into SQL like pattern:
+```java
+JWildcard.wildcardToSqlPattern("?wild*Ca?rd*") // outputs this => _wild%Ca_rd%
+```
 
 ### Getting Started
 
@@ -44,31 +73,3 @@ dependencies {
 ```
 ### API
 API documentation https://alenon.github.io/JWildcard/
-
-### Examples:
-
-This wildcard:
-```java
-"mywil?card*"
-```
-will be converted to this regex string:
-```java
-"\Qmywil\E.\Qcard\E.*"
-```
-If you wish to convert wildcard to regex string use:
-```java
-JWildcard.wildcardToRegex("mywil?card*");
-```
-Default wildcard rules are: "?" -> ".", "\*" -> ".\*", but you can change the default behaviour, by simply defining the new rules:
-```java
-JWildcard.wildcardToRegex(wildcard, rules, strict);
-```
-If you wish to check matching directly you can use the following example:
-```java
-JWildcard.matches("mywild*", "mywildcard");
-```
-
-In order to convert wildcard string into SQL like pattern:
-```java
-JWildcard.wildcardToSqlPattern("?wild*Ca?rd*") // outputs this => _wild%Ca_rd%
-```
