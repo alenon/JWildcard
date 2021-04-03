@@ -7,13 +7,14 @@ A collection of wildcard utilities. This library helps to convert wildcards to r
 
 ![Master Build](https://github.com/alenon/JWildcard/workflows/Java%20CI%20with%20Maven/badge.svg)
 
-[![Download](https://api.bintray.com/packages/yevdo/jwildcard/jwildcard/images/download.svg)](https://bintray.com/yevdo/jwildcard/jwildcard/_latestVersion)
+[Direct Download](https://alenon.jfrog.io/artifactory/maven-releases/com/yevdo/jwildcard/1.5/jwildcard-1.5.jar)
 <br />
-[![Sonar quality gates](https://sonarcloud.io/api/project_badges/measure?project=com.yevdo.jwildcard&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.yevdo.jwildcard)
-[![Sonar Lines of code](https://sonarcloud.io/api/project_badges/measure?project=com.yevdo.jwildcard&metric=ncloc)](https://sonarcloud.io/dashboard?id=com.yevdo.jwildcard)
-[![Sonar Coverage](https://sonarcloud.io/api/project_badges/measure?project=com.yevdo.jwildcard&metric=coverage&123)](https://sonarcloud.io/dashboard?id=com.yevdo.jwildcard)
 
-Gradle <code>build.gradle</code>
+Library packages stored in both: Github and Artifactory (https://alenon.jfrog.io/) repositories
+
+#### Using Gradle 
+
+<code>build.gradle</code>
 ```gradle
 repositories {
     jcenter()
@@ -24,7 +25,8 @@ dependencies {
 }
 ```
 
-Maven <code>pom.xml</code>
+#### Using Maven 
+<code>pom.xml</code>
 ```xml
 <distributionManagement>
     <repository>
